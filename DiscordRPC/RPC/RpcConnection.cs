@@ -5,8 +5,8 @@ using DiscordRPC.RPC.Commands;
 using DiscordRPC.RPC.Payload;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
-using Newtonsoft.Json;
 using DiscordRPC.Logging;
 using DiscordRPC.Events;
 
@@ -532,12 +532,7 @@ namespace DiscordRPC.RPC
 
 					case Command.Unsubscribe:
 					case Command.Subscribe:
-
-						//Prepare a serializer that can account for snake_case enums.
-						JsonSerializer serializer = new JsonSerializer();
-						serializer.Converters.Add(new Converters.EnumSnakeCaseConverter());
-
-                        //Go through the data, looking for the evt property, casting it to a server event
+						//Go through the data, looking for the evt property, casting it to a server event
                         var evt = response.GetObject<EventPayload>().Event.Value;
 
 						//Enqueue the appropriate message.

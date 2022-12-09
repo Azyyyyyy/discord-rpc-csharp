@@ -1,6 +1,4 @@
 ﻿using DiscordRPC.Converters;
-using System;
-using System.Runtime.Serialization;
 
 namespace DiscordRPC.RPC.Payload
 {
@@ -9,7 +7,6 @@ namespace DiscordRPC.RPC.Payload
     /// </summary>
     internal enum ServerEvent
 	{
-
 		/// <summary>
 		/// Sent when the server is ready to accept messages
 		/// </summary>

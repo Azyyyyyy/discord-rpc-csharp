@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace DiscordRPC.Exceptions
 {
@@ -13,12 +10,12 @@ namespace DiscordRPC.Exceptions
         /// <summary>
         /// Maximum length the string is allowed to be.
         /// </summary>
-        public int MaximumLength { get; private set; }
+        public int MaximumLength { get; }
 
         /// <summary>
         /// Minimum length the string is allowed to be.
         /// </summary>
-        public int MinimumLength { get; private set; }
+        public int MinimumLength { get; }
 
         /// <summary>
         /// Creates a new string out of range exception with a range of min to max and a custom message

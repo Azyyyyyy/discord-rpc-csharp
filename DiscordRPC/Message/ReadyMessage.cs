@@ -1,6 +1,6 @@
 ﻿
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace DiscordRPC.Message
 {
@@ -17,19 +17,19 @@ namespace DiscordRPC.Message
 		/// <summary>
 		/// The configuration of the connection
 		/// </summary>
-		[JsonProperty("config")]
+		[JsonPropertyName("config")]
 		public Configuration Configuration { get; set; }
 
 		/// <summary>
 		/// User the connection belongs too
 		/// </summary>
-		[JsonProperty("user")]
+		[JsonPropertyName("user")]
 		public User User { get; set; }
 
 		/// <summary>
 		/// The version of the RPC
 		/// </summary>
-		[JsonProperty("v")]
+		[JsonPropertyName("v")]
 		public int Version { get; set; }
 	}
 }

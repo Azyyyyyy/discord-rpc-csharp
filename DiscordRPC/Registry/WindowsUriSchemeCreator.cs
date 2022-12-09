@@ -3,6 +3,9 @@ using System;
 
 namespace DiscordRPC.Registry
 {
+#if NET5_0_OR_GREATER
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+#endif
     internal class WindowsUriSchemeCreator : IUriSchemeCreator
     {
         private ILogger logger;

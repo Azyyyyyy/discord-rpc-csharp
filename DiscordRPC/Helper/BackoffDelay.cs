@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace DiscordRPC.Helper
 {
@@ -11,12 +8,12 @@ namespace DiscordRPC.Helper
 		/// <summary>
 		/// The maximum time the backoff can reach
 		/// </summary>
-		public int Maximum { get; private set; }
+		public int Maximum { get; }
 
 		/// <summary>
 		/// The minimum time the backoff can start at
 		/// </summary>
-		public int Minimum { get; private set; }
+		public int Minimum { get; }
 
 		/// <summary>
 		/// The current time of the backoff

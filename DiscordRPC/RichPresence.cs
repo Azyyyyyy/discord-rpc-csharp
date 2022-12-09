@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
 using System;
 using DiscordRPC.Helper;
 using System.Text;
+using System.Text.Json.Serialization;
 using DiscordRPC.Exceptions;
 
 namespace DiscordRPC
@@ -9,7 +9,6 @@ namespace DiscordRPC
     /// <summary>
     /// The base rich presence structure
     /// </summary>
-    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     [Serializable]
     public class BaseRichPresence
     {
@@ -17,7 +16,7 @@ namespace DiscordRPC
         /// The user's current <see cref="Party"/> status. For example, "Playing Solo" or "With Friends".
         /// <para>Max 128 bytes</para>
         /// </summary>
-        [JsonProperty("state", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("state"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string State
         {
             get { return _state; }
@@ -28,14 +27,14 @@ namespace DiscordRPC
             }
         }
 
-        /// <summary>Inernal inner state string</summary>
-        protected internal string _state;
+        /// <summary>Internal inner state string</summary>
+        private string _state;
 
         /// <summary>
         /// What the user is currently doing. For example, "Competitive - Total Mayhem".
         /// <para>Max 128 bytes</para>
         /// </summary>
-        [JsonProperty("details", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("details"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Details
         {
             get { return _details; }
@@ -45,25 +44,25 @@ namespace DiscordRPC
                     throw new StringOutOfRangeException(128);
             }
         }
-        /// <summary>Inernal inner detail string</summary>
-        protected internal string _details;
+        /// <summary>Internal inner detail string</summary>
+        private string _details;
 
         /// <summary>
         /// The time elapsed / remaining time data.
         /// </summary>
-        [JsonProperty("timestamps", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("timestamps"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Timestamps Timestamps { get; set; }
 
         /// <summary>
         /// The names of the images to use and the tooltips to give those images.
         /// </summary>
-        [JsonProperty("assets", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("assets"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Assets Assets { get; set; }
 
         /// <summary>
         /// The party the player is currently in. The <see cref="Party.ID"/> must be set for this to be included in the RichPresence update.
         /// </summary>
-        [JsonProperty("party", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("party"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Party Party { get; set; }
 
         /// <summary>
@@ -71,7 +70,7 @@ namespace DiscordRPC
         /// <para>To keep security on the up and up, Discord requires that you properly hash/encode/encrypt/put-a-padlock-on-and-swallow-the-key-but-wait-then-how-would-you-open-it your secrets.</para>
         /// <para>Visit the <see href="https://discordapp.com/developers/docs/rich-presence/how-to#secrets">Rich Presence How-To</see> for more information.</para>
         /// </summary>
-        [JsonProperty("secrets", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("secrets"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Secrets Secrets { get; set; }
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace DiscordRPC
         /// "TLDR it marks the matchSecret field as an instance, that is to say a context in game that’s not like a lobby state/not in game state. It was gonna he used for notify me, but we scrapped that for ask to join. We may put it to another use in the future. For now, don’t worry about it" - Mason (Discord API Server 14 / 03 / 2018)
         ///    </para>
         /// </summary>
-        [JsonProperty("instance", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("instance"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [Obsolete("This was going to be used, but was replaced by JoinSecret instead")]
         private bool Instance { get; set; }
 
@@ -285,7 +284,7 @@ namespace DiscordRPC
         /// <para>Max Length of 128 Bytes</para>
         /// </summary>
         [Obsolete("This feature has been deprecated my Mason in issue #152 on the offical library. Was originally used as a Notify Me feature, it has been replaced with Join / Spectate.")]
-        [JsonProperty("match", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("match"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string MatchSecret
         {
             get { return _matchSecret; }
@@ -304,7 +303,7 @@ namespace DiscordRPC
         /// </para>
         /// <para>Max Length of 128 Bytes</para>
         /// </summary>
-        [JsonProperty("join", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("join"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string JoinSecret
         {
             get { return _joinSecret; }
@@ -323,7 +322,7 @@ namespace DiscordRPC
         /// </para>
         /// <para>Max Length of 128 Bytes</para>
         /// </summary>
-        [JsonProperty("spectate", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("spectate"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SpectateSecret
         {
             get { return _spectateSecret; }
@@ -393,7 +392,7 @@ namespace DiscordRPC
         /// Name of the uploaded image for the large profile artwork.
         /// <para>Max 256 Bytes.</para>
         /// </summary>
-        [JsonProperty("large_image", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("large_image"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string LargeImageKey
         {
             get { return _largeimagekey; }
@@ -425,7 +424,7 @@ namespace DiscordRPC
         /// The tooltip for the large square image. For example, "Summoners Rift" or "Horizon Lunar Colony".
         /// <para>Max 128 Bytes.</para>
         /// </summary>
-        [JsonProperty("large_text", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("large_text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string LargeImageText
         {
             get { return _largeimagetext; }
@@ -442,7 +441,7 @@ namespace DiscordRPC
         /// Name of the uploaded image for the small profile artwork.
         /// <para>Max 256 Bytes.</para>
         /// </summary>
-        [JsonProperty("small_image", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("small_image"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SmallImageKey
         {
             get { return _smallimagekey; }
@@ -474,7 +473,7 @@ namespace DiscordRPC
         /// The tooltip for the small circle image. For example, "LvL 6" or "Ultimate 85%".
         /// <para>Max 128 Bytes.</para>
         /// </summary>
-        [JsonProperty("small_text", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("small_text"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SmallImageText
         {
             get { return _smallimagetext; }
@@ -611,7 +610,7 @@ namespace DiscordRPC
         /// <summary>
         /// Converts between DateTime and Milliseconds to give the Unix Epoch Time for the <see cref="Timestamps.Start"/>.
         /// </summary>
-        [JsonProperty("start", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("start"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ulong? StartUnixMilliseconds
         {
             get
@@ -630,7 +629,7 @@ namespace DiscordRPC
         /// Converts between DateTime and Milliseconds to give the Unix Epoch Time  for the <see cref="Timestamps.End"/>.
         /// <seealso cref="End"/>
         /// </summary>
-        [JsonProperty("end", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("end"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ulong? EndUnixMilliseconds
         {
             get
@@ -694,7 +693,7 @@ namespace DiscordRPC
         /// A unique ID for the player's current party / lobby / group. If this is not supplied, they player will not be in a party and the rest of the information will not be sent. 
         /// <para>Max 128 Bytes</para>
         /// </summary>
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("id"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ID { get { return _partyid; } set { _partyid = value.GetNullOrString(); } }
         private string _partyid;
 
@@ -713,11 +712,11 @@ namespace DiscordRPC
         /// <summary>
         /// The privacy of the party
         /// </summary>
-        [JsonProperty("privacy", NullValueHandling = NullValueHandling.Include, DefaultValueHandling = DefaultValueHandling.Include)]
+        [JsonPropertyName("privacy"), JsonInclude]
         public PrivacySetting Privacy { get; set; }
 
 
-        [JsonProperty("size", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("size"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         private int[] _size
         {
             get
@@ -753,7 +752,7 @@ namespace DiscordRPC
         /// Text shown on the button
         /// <para>Max 32 bytes.</para>
         /// </summary>
-        [JsonProperty("label")]
+        [JsonPropertyName("label")]
         public string Label
         {
             get { return _label; }
@@ -769,7 +768,7 @@ namespace DiscordRPC
         /// The URL opened when clicking the button.
         /// <para>Max 512 bytes.</para>
         /// </summary>
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url
         {
             get { return _url; }
@@ -795,7 +794,7 @@ namespace DiscordRPC
         /// The buttons to display in the presence. 
         /// <para>Max of 2</para>
         /// </summary>
-        [JsonProperty("buttons", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("buttons"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Button[] Buttons { get; set; }
 
         /// <summary>
@@ -887,8 +886,8 @@ namespace DiscordRPC
         {
             return new RichPresence
             {
-                State = this._state != null ? _state.Clone() as string : null,
-                Details = this._details != null ? _details.Clone() as string : null,
+                State = this.State != null ? State.Clone() as string : null,
+                Details = this.Details != null ? Details.Clone() as string : null,
                 
                 Buttons = !HasButtons() ? null : this.Buttons.Clone() as Button[],
                 Secrets = !HasSecrets() ? null : new Secrets
@@ -930,8 +929,8 @@ namespace DiscordRPC
         /// <returns>self</returns>
         internal RichPresence Merge(BaseRichPresence presence)
         {
-            this._state = presence.State;
-            this._details = presence.Details;
+            this.State = presence.State;
+            this.Details = presence.Details;
             this.Party = presence.Party;
             this.Timestamps = presence.Timestamps;
             this.Secrets = presence.Secrets;
@@ -1001,13 +1000,13 @@ namespace DiscordRPC
         /// <summary>
         /// ID of the client
         /// </summary>
-        [JsonProperty("application_id")]
+        [JsonPropertyName("application_id"), JsonInclude]
         public string ClientID { get; private set; }
 
         /// <summary>
         /// Name of the bot
         /// </summary>
-        [JsonProperty("name")]
+        [JsonPropertyName("name"), JsonInclude]
         public string Name { get; private set; }
 
     }

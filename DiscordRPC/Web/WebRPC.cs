@@ -2,10 +2,10 @@
 using DiscordRPC.RPC;
 using DiscordRPC.RPC.Commands;
 using DiscordRPC.RPC.Payload;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text.Json;
 
 #if INCLUDE_WEB_RPC
 namespace DiscordRPC.Web
@@ -101,13 +101,13 @@ namespace DiscordRPC.Web
 			try
 			{
 				//Try to parse the JSON into a event
-				EventPayload ev = JsonConvert.DeserializeObject<EventPayload>(json);
+				EventPayload ev = JsonSerializer.Deserialize<EventPayload>(json);
 
 				//We have a result, so parse the rich presence response and return it.
 				if (ev != null)
 				{
 					//Parse the response into a rich presence response
-					response = ev.GetObject<RichPresenceResponse>();
+					response = ev.GetObject<RichPresence>();
 					return true;
 				}
 
@@ -147,7 +147,7 @@ namespace DiscordRPC.Web
 			PresenceCommand command = new PresenceCommand() { PID = pid, Presence = presence };
 			var payload = command.PreparePayload(DateTime.UtcNow.ToFileTime());
 
-			string json = JsonConvert.SerializeObject(payload);
+			string json = JsonSerializer.Serialize(payload);
 
 			string url = "http://127.0.0.1:" + port + "/rpc?v=" + RpcConnection.VERSION + "&client_id=" + applicationID;
 			return new WebRequest(url, json);

@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace DiscordRPC.IO
 {
@@ -79,7 +77,7 @@ namespace DiscordRPC.IO
 		/// <param name="obj"></param>
 		public void SetObject(object obj)
 		{
-			string json = JsonConvert.SerializeObject(obj);
+			string json = JsonSerializer.Serialize(obj);
 			SetMessage(json);
 		}
 
@@ -102,7 +100,7 @@ namespace DiscordRPC.IO
 		public T GetObject<T>()
 		{
 			string json = GetMessage();
-			return JsonConvert.DeserializeObject<T>(json);
+			return JsonSerializer.Deserialize<T>(json);
 		}
 
 		/// <summary>

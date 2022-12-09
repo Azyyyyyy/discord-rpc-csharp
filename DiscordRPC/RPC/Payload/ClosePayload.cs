@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace DiscordRPC.RPC.Payload
 {
@@ -11,13 +7,13 @@ namespace DiscordRPC.RPC.Payload
 		/// <summary>
 		/// The close code the discord gave us
 		/// </summary>
-		[JsonProperty("code")]
+		[JsonPropertyName("code")]
 		public int Code { get; set; }
 
 		/// <summary>
 		/// The close reason discord gave us
 		/// </summary>
-		[JsonProperty("message")]
+		[JsonPropertyName("message")]
 		public string Reason { get; set; }
 
 		[JsonConstructor]

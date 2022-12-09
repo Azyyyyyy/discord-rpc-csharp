@@ -1,6 +1,7 @@
-﻿using DiscordRPC.Converters;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using DiscordRPC.Converters;
 
 namespace DiscordRPC.RPC.Payload
 {
@@ -12,13 +13,13 @@ namespace DiscordRPC.RPC.Payload
 		/// <summary>
 		/// The data the server sent too us
 		/// </summary>
-		[JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
-		public JObject Data { get; set; }
+		[JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+		public JsonObject Data { get; set; }
 
 		/// <summary>
 		/// The type of event the server sent
 		/// </summary>
-		[JsonProperty("evt"), JsonConverter(typeof(EnumSnakeCaseConverter))]
+		[JsonPropertyName("evt"), JsonConverter(typeof(EnumSnakeCaseConverter<ServerEvent>))]
 		public ServerEvent? Event { get; set; }
 
         /// <summary>
@@ -39,8 +40,8 @@ namespace DiscordRPC.RPC.Payload
 		/// <returns></returns>
 		public T GetObject<T>()
 		{
-			if (Data == null) return default(T);
-            return Data.ToObject<T>();
+			if (Data == null) return default;
+            return Data.Deserialize<T>();
 		}
 
         /// <summary>
